@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contest Region Selector</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin-top: 100px;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        #world-map {
+            width: 100%;
+            height: auto;
+        }
+
+        #region-list {
+            display: none;
+            list-style: none;
+            padding: 0;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+        }
+
+        #region-list li {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        #region-list li:last-child {
+            border-bottom: none;
+        }
+
+	header {
+            background-color: #2e3c4e;
+            color: #fff;
+            text-align: center;
+            padding: 2em 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #3f5269;
+            padding: 1em 0;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5em 1em;
+            margin: 0 1em;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #546d8c;
+        }
+
+        .social-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            background-color: #2e3c4e;
+            padding: 0.3em 0.5em;
+            width: 100%;
+        }
+
+        .social-bar img {
+            width: 50px;
+            margin-right: 10px;
+        }
+
+        .social-bar img.icpc-logo {
+            width: 100px;
+            margin-right: 10px;
+        }
+
+        .social-links {
+            margin-left: auto;
+        }
+
+        .buttons {
+            display: flex;
+            align-items: center;
+        }
+
+        .login-button,
+        .signup-button {
+            margin-left: 1em;
+            background-color: #2e3c4e;
+            color: #fff;
+            border: none;
+            padding: 0.5em 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .login-button:hover,
+        .signup-button:hover {
+            background-color: #3f5269;
+        }
+    </style>
+</head>
+
+<body>
+
+     <div class="social-bar">
+        <img src="icpc.png" alt="ICPC Logo" class="icpc-logo">
+        <div class="social-links">
+            <a href="https://www.facebook.com/ICPCNews" target="_blank"><img src="facebook.png" alt="Facebook"></a>
+            <a href="https://twitter.com/ICPCNews" target="_blank"><img src="twitter.png" alt="Twitter"></a>
+            <a href="https://www.instagram.com/ICPCNews/" target="_blank"><img src="instagram.png" alt="Instagram"></a>
+            <a href="https://news.icpc.global/linkedin" target="_blank"><img src="linkedin.png" alt="Linkedin"></a>
+        </div>
+        <div class="buttons">
+            <button class="login-button">Login</button>
+            <button class="signup-button">Sign Up</button>
+        </div>
+    </div>
+
+    <img src="world map.jpg" alt="World Map" id="world-map" usemap="#world-map" onclick="showRegionList(event)">
+
+<map name="world-map">
+    <area shape="rect" coords="600,4,191,236" alt="North America" onclick="showContests('North America')">
+    <area shape="rect" coords="348,222,535,422" alt="South America" onclick="showContests('South America')">
+    <area shape="rect" coords="544,45,748,141" alt="Europe" onclick="showContests('Europe')">
+    <area shape="rect" coords="738,3,1021,234" alt="Asia" onclick="showContests('Asia')">
+    <area shape="rect" coords="533,131,762,348" alt="Africa" onclick="showContests('Africa')">
+    <area shape="rect" coords="774,269,1200,420" alt="Australia" onclick="showContests('Australia')">
+</map>
+
+
+
+
+    <ul id="region-list">
+        <li onclick="showContests('North America')">North America</li>
+        <li onclick="showContests('South America')">South America</li>
+        <li onclick="showContests('Europe')">Europe</li>
+        <li onclick="showContests('Asia')">Asia</li>
+        <li onclick="showContests('Africa')">Africa</li>
+        <li onclick="showContests('Australia')">Australia</li>
+    </ul>
+
+    <script>
+        function showRegionList(event) {
+            const regionList = document.getElementById('region-list');
+            regionList.style.display = 'block';
+            regionList.style.left = `${event.clientX}px`;
+            regionList.style.top = `${event.clientY}px`;
+        }
+    
+        function showContests(region) {
+            // Define the mapping of regions to page URLs
+            const regionPages = {
+                'North America': 'north.php',
+                'South America': 'south.php',
+                'Europe': 'europe_contests.php',
+                'Asia': 'asia_contests.php',
+                'Africa': 'africa_contests.php',
+                'Australia': 'australia_contests.php'
+            };
+    
+            // Get the page URL based on the selected region
+            const pageURL = regionPages[region];
+    
+            if (pageURL) {
+                // Redirect to the selected page
+                window.location.href = pageURL;
+            } else {
+                alert(`No contests available for ${region}`);
+            }
+        }
+    
+        // Hide the region list when clicking outside the list
+        window.addEventListener('click', function (event) {
+            const regionList = document.getElementById('region-list');
+            if (event.target !== regionList && !regionList.contains(event.target)) {
+                regionList.style.display = 'none';
+            }
+        });
+    </script>
+    
+
+</body>
+
+</html>
